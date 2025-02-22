@@ -3,18 +3,17 @@ package db
 import (
 	"chiAPI/models"
 	"github.com/google/uuid"
-	"gorm.io/gorm"
 )
 
-func SetupUser(context *gorm.DB) {
-	uuid, _ := uuid.NewRandom()
+func SetupUser(database Database) {
+	user_id, _ := uuid.NewRandom()
 
 	user := &models.User{
-		ID:        uuid,
+		ID:        user_id,
 		FirstName: "testName",
 		LastName:  "testLastName",
 	}
-	if err := context.Create(user); err != nil {
+	if err := database.Context.Create(user); err != nil {
 		panic(err)
 	}
 }

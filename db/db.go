@@ -19,7 +19,7 @@ const ( // for now, TODO: move to configs
 	dbname   = "myappdb"
 )
 
-func NewDbConnection() Database {
+func NewDatabase() Database {
 	connStr := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 		host, port, user, password, dbname)
 
@@ -30,16 +30,13 @@ func NewDbConnection() Database {
 	return Database{Context: db}
 }
 
-func SetupTestDatabase() (*gorm.DB, error) {
-	// Setup the test database
+func NewTestDatabase() Database {
+	// Set up the test database
 	db, err := gorm.Open(sqlite.Open(":memory"), &gorm.Config{})
 
 	if err != nil {
-		fmt.Println("Failed to connect to the database..")
-		return nil, err
+		panic("Failed to connect to the database..")
 	}
 
-	Migrate(db)
-
-	return db, nil
+	return Database{Context: db}
 }

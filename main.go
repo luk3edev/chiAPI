@@ -8,15 +8,15 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"net/http"
+	"os"
+	"testing"
 )
 
 func main() {
 	// Initialize database singleton
 	fmt.Println("Initializing database...")
 
-	database := db.NewDbConnection()
-
-	db.Migrate(database.Context)
+	var database = SetupDatabase()
 
 	// Initialize user service with database dependency
 	userService := services.NewUserService(&database)
@@ -45,4 +45,21 @@ func main() {
 	if err := http.ListenAndServe(":8080", r); err != nil {
 		panic("failed to start server: " + err.Error())
 	}
+}
+
+func SetupDatabase() db.Database {
+	var database db.Database
+	if isTest() {
+		database = db.NewTestDatabase()
+		db.Migrate(database)
+	} else {
+		database = db.NewDatabase()
+		db.Migrate(database)
+		db.SetupUser(database)
+	}
+	return database
+}
+
+func isTest() bool {
+	return os.Getenv("GO_ENV") == "test" || testing.Short()
 }
