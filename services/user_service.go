@@ -33,14 +33,14 @@ func (s *UserService) CreateUser(user models.User) (models.User, error) {
 func (s *UserService) GetUser(id string) (models.User, error) {
 	var user models.User
 
-	uuid, err := uuid.Parse(id)
+	parsedId, err := uuid.Parse(id)
 
 	if err != nil {
 		fmt.Println("Error parsing UUID:", err)
 		return models.User{}, err
 	}
 
-	if err := s.db.Context.First(&user, "id = ?", uuid).Error; err != nil {
+	if err := s.db.Context.First(&user, "id = ?", parsedId).Error; err != nil {
 		return models.User{}, err
 	}
 	return user, nil
