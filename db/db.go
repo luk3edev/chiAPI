@@ -3,6 +3,7 @@ package db
 import (
 	"fmt"
 	"gorm.io/driver/postgres"
+	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
@@ -27,4 +28,18 @@ func NewDbConnection() Database {
 		panic("Failed to connect to the database..")
 	}
 	return Database{Context: db}
+}
+
+func SetupTestDatabase() (*gorm.DB, error) {
+	// Setup the test database
+	db, err := gorm.Open(sqlite.Open(":memory"), &gorm.Config{})
+
+	if err != nil {
+		fmt.Println("Failed to connect to the database..")
+		return nil, err
+	}
+
+	Migrate(db)
+
+	return db, nil
 }

@@ -16,7 +16,7 @@ func main() {
 
 	database := db.NewDbConnection()
 
-	db.Migrate(database)
+	db.Migrate(database.Context)
 
 	// Initialize user service with database dependency
 	userService := services.NewUserService(&database)
