@@ -9,6 +9,7 @@
 /go/bin
 /go.sum
 
+
 # IDE & Editor settings
 .vscode/
 .idea/
@@ -33,6 +34,8 @@ docker-compose.yml
 tmp/
 .cache/
 *.tmp
+*.iml
+*.xml
 
 # Dependency management
 vendor/
