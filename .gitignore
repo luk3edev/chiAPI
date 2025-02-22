@@ -1,0 +1,44 @@
+# Go build artifacts
+*.exe
+*.test
+*.out
+*.log
+
+# Go modules
+/go/pkg
+/go/bin
+/go.sum
+
+
+# IDE & Editor settings
+.vscode/
+.idea/
+*.swp
+
+# Environment variables
+.env
+
+# Logs & Debug
+*.log
+debug/
+
+# Database & Migrations
+*.db
+*.sqlite
+
+# Docker
+pgdata/
+docker-compose.yml
+
+# Cache & Temporary files
+tmp/
+.cache/
+*.tmp
+*.iml
+*.xml
+
+# Dependency management
+vendor/
+
+# Executable binaries
+bin/
